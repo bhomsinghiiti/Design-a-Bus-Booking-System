@@ -1,9 +1,12 @@
+
+
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var mongoose = require('mongoose');
 var passport = require('passport');
+require("dotenv").config();
 const cors = require('cors')
 
 
@@ -22,22 +25,17 @@ var registerRouter = require('./routes/register');
 //--------------------------------------------------------
 
 
-//DB Config
-const DB_URL = require('./config/keys').MongoURI;
-
 //connect to mongo
-//---------------------------------------------
-mongoose.connect(DB_URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-})
+mongoose.connect(
+    "mongodb+srv://ce200004010:" + process.env.MONGO_PASSWORD +"@cluster0.prmmwdd.mongodb.net/test",
+)
     .then(() => {
-        console.log("Connected to MongoDB")
+        console.log('Connected to MongoDB!');
     })
-    .catch(err => {
-        throw err
-    })
-//---------------------------------------------
+    .catch((err) => {
+        console.error('Error connecting to MongoDB:', err.message);
+    });
+
 
 
 app.use(logger('dev'));
